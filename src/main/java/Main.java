@@ -29,7 +29,7 @@ public class Main {
         content.add(displayPanel, BorderLayout.CENTER);
         content.add(okButton, BorderLayout.SOUTH);
 
-        JFrame window = new JFrame("App");
+        JFrame window = new JFrame("FlashApp");
         window.setContentPane(content);
         window.setSize(250,100);
         window.setLocation(100,100);
