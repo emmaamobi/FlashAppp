@@ -2,4 +2,4 @@
 ## Team Members: 
 * Emmanuel Amobi
 * Lindsay Ladewig
-* COllin Jones
+* Collin Jones
