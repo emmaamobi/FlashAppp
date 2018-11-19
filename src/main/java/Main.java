@@ -2,38 +2,32 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Main {
-    private static class HelloWorldDisplay extends JPanel {
-        public void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            g.drawString( "Hello World!", 20, 30 );
+    private static class OptionPaneExample extends WindowAdapter {
+        JFrame f;
+
+        OptionPaneExample() {
+            f = new JFrame();
+            f.addWindowListener(this);
+            f.setSize(300, 300);
+            f.setLayout(null);
+            f.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            f.setVisible(true);
+        }
+
+        public void windowClosing(WindowEvent e) {
+            int a = JOptionPane.showConfirmDialog(f, "Are you sure?");
+            if (a == JOptionPane.YES_OPTION) {
+                f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            }
         }
     }
+        public static void main(String[] args) {
+        new OptionPaneExample();
 
-    private static class ButtonHandler implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            System.exit(0);
-        }
-    }
-
-    public static void main(String[] args) {
-
-        HelloWorldDisplay displayPanel = new HelloWorldDisplay();
-        JButton okButton = new JButton("OK");
-        ButtonHandler listener = new ButtonHandler();
-        okButton.addActionListener(listener);
-
-        JPanel content = new JPanel();
-        content.setLayout(new BorderLayout());
-        content.add(displayPanel, BorderLayout.CENTER);
-        content.add(okButton, BorderLayout.SOUTH);
-
-        JFrame window = new JFrame("App");
-        window.setContentPane(content);
-        window.setSize(250,100);
-        window.setLocation(100,100);
-        window.setVisible(true);
 
     }
 }
