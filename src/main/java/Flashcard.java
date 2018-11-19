@@ -1,7 +1,7 @@
 public class Flashcard {
 
-    String term;
-    String definition;
+    private String term;
+    private String definition;
 
     public Flashcard(String term, String definition){
         if (term == null){
