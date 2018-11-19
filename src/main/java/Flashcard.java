@@ -1,9 +1,15 @@
 public class Flashcard {
 
-    String term;
-    String definition;
+    private String term;
+    private String definition;
 
     public Flashcard(String term, String definition){
+        if (term == null){
+            throw new IllegalArgumentException("term is null");
+        }
+        if (definition == null){
+            throw new IllegalArgumentException("definition is null");
+        }
         this.term = term;
         this.definition = definition;
     }
