@@ -13,7 +13,7 @@ public class CardStack {
 
     }
     
-    private Flashcard peek(){ // method returns flashcard from top of stack but doesn't remove it
+    private Flashcard peek(){ // method returns flashcard from top of stack but doesn't remove itcd 
         return stackOCards.peek();
     }
     
