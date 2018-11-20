@@ -3,6 +3,7 @@ import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 import static org.junit.Assert.*;
+import java.util.EmptyStackException;
 
 public class TestStack {
 
@@ -16,6 +17,22 @@ public class TestStack {
     @After
     public void tearDown(){
         fixture = null;
+    }
+
+    @Test
+    public void testInitial(){
+        //tests functions before loading the stack
+        assertTrue(fixture.empty());
+        try{
+            fixture.peek();
+            fail("EmptyStackException expected");
+        }catch (EmptyStackException ex){
+        }
+        try{
+            fixture.pop();
+            fail("EmptyStackException expected");
+        }catch (EmptyStackException ex){
+        }
     }
 
     @Test
