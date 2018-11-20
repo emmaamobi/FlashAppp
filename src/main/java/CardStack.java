@@ -1,7 +1,11 @@
 import java.util.*;
 
 public class CardStack {
-    public Stack<Flashcard> stackOCards = new Stack<>();
+    private Stack<Flashcard> stackOCards;
+    public CardStack(){
+    stackOCards = new Stack<>();
+    }
+
     //LIFO
     
     public void push(Flashcard f){

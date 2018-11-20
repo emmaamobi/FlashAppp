@@ -2,7 +2,10 @@
 import java.util.*;
 
 public class CardQueue {
-    private Queue<Flashcard> queueCard = new LinkedList<>();
+    private Queue<Flashcard> queueCard;
+    public CardQueue(){
+        queueCard = new LinkedList<>();
+    }
     //FIFO
 
     public void offer(Flashcard card){
