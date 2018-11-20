@@ -35,6 +35,7 @@ public class TestStack {
 
     @Test
     public void testPop(){
+        //tests pop method
         Flashcard test1 = new Flashcard("carbon", "6 protons");
         Flashcard test2 = new Flashcard("oxygen", "8 protons");
         Flashcard test3 = new Flashcard("nitrogen", "7 protons");
@@ -49,6 +50,7 @@ public class TestStack {
 
     @Test
     public void testPeek(){
+        //tests peek method
         Flashcard test1 = new Flashcard("carbon", "6 protons");
         Flashcard test2 = new Flashcard("oxygen", "8 protons");
         Flashcard test3 = new Flashcard("nitrogen", "7 protons");
@@ -60,7 +62,12 @@ public class TestStack {
         assertEquals(test3, fixture.peek());
         fixture.pop();
         assertEquals(test2, fixture.peek());
+    }
 
+    @Test
+    public void testEmpty(){
+        //tests empty method
+        assertTrue(fixture.empty());
     }
 
 
