@@ -30,7 +30,6 @@ public class TestStack {
         assertEquals(test2, fixture.peek());
         fixture.push(test3);
         assertEquals(test3, fixture.peek());
-
     }
 
     @Test
