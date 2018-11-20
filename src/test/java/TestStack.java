@@ -20,21 +20,46 @@ public class TestStack {
 
     @Test
     public void testPush(){
-        Flashcard f = new Flashcard("carbon", "6 protons");
-        fixture.push(f);
-        assertEquals(f, fixture.peek());
+        //tests push method
+        Flashcard test1 = new Flashcard("carbon", "6 protons");
+        Flashcard test2 = new Flashcard("oxygen", "8 protons");
+        Flashcard test3 = new Flashcard("nitrogen", "7 protons");
+        fixture.push(test1);
+        assertEquals(test1, fixture.peek());
+        fixture.push(test2);
+        assertEquals(test2, fixture.peek());
+        fixture.push(test3);
+        assertEquals(test3, fixture.peek());
+
     }
 
     @Test
     public void testPop(){
-        Flashcard f = new Flashcard("carbon", "6 protons");
-        fixture.push(f);
-        assertEquals(f, fixture.peek());
-        assertEquals(f, fixture.pop());
+        Flashcard test1 = new Flashcard("carbon", "6 protons");
+        Flashcard test2 = new Flashcard("oxygen", "8 protons");
+        Flashcard test3 = new Flashcard("nitrogen", "7 protons");
+        fixture.push(test1);
+        fixture.push(test2);
+        fixture.push(test3);
+        assertEquals(test3, fixture.pop());
+        assertEquals(test2, fixture.pop());
+        assertEquals(test1, fixture.pop());
+        assertTrue(fixture.empty());
     }
 
     @Test
     public void testPeek(){
+        Flashcard test1 = new Flashcard("carbon", "6 protons");
+        Flashcard test2 = new Flashcard("oxygen", "8 protons");
+        Flashcard test3 = new Flashcard("nitrogen", "7 protons");
+        fixture.push(test1);
+        assertEquals(test1, fixture.peek());
+        fixture.push(test2);
+        assertEquals(test2, fixture.peek());
+        fixture.push(test3);
+        assertEquals(test3, fixture.peek());
+        fixture.pop();
+        assertEquals(test2, fixture.peek());
 
     }
 
