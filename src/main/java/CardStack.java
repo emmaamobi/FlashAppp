@@ -2,19 +2,31 @@ import java.util.*;
 
 public class CardStack {
     private Stack<Flashcard> stackOCards;
+    public CardStack(){
+    stackOCards = new Stack<>();
+    }
+
+    //LIFO
     
-    private void push(Flashcard f)// method pushes flashcard to top of stack
-    {
+    public void push(Flashcard f){
+        // method pushes flashcard to top of stack
         stackOCards.push(f);   
     } 
     
-    private Flashcard pop(){ // method returns flashcard from top of stack and removes it
+    public Flashcard pop(){
+        // method returns flashcard from top of stack and removes it
         return stackOCards.pop();
 
     }
     
-    private Flashcard peek(){ // method returns flashcard from top of stack but doesn't remove itcd 
+    public Flashcard peek(){
+        // method returns flashcard from top of stack but doesn't remove it
         return stackOCards.peek();
+    }
+
+    public boolean empty(){
+        //returns whether stack is empty
+        return stackOCards.empty();
     }
     
     
