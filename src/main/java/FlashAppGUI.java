@@ -8,7 +8,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
     private String ans = "";
     public FlashAppGUI(){
         // create a new frame
-        f = new JFrame("frame");
+        f = new JFrame("FlashApp");
 
 
 
@@ -37,19 +37,19 @@ public class FlashAppGUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String s = e.getActionCommand();
         if (s.equals("click")) {
-            // create a dialog Box
-            JDialog d = new JDialog(f, "dialog Box");
-
-            // create a label
-            JLabel l = new JLabel("this is a dialog box");
-
-            d.add(l);
-
-            // setsize of dialog
-            d.setSize(100, 100);
+//            // create a dialog Box
+//            JDialog d = new JDialog(f, "dialog Box");
+//
+//            // create a label
+//            JLabel l = new JLabel("Stuff");
+//
+//            d.add(l);
+//
+//            // setsize of dialog
+//            d.setSize(100, 100);
 
             // set visibility of dialog
-            d.setVisible(true);
+//            d.setVisible(true);
             while (!ans.equals("no")) {
                 String word = JOptionPane.showInputDialog(null, "Enter word: ");
                 String definition = JOptionPane.showInputDialog(null, "Enter definition: ");
@@ -59,8 +59,21 @@ public class FlashAppGUI extends JFrame implements ActionListener {
                 ans = reply;
             }
             while (!deck.empty()){
-                System.out.println(deck.pop());
+                String defn  = deck.peek().getDefinition();
+                String term = deck.peek().getTerm();
+                JOptionPane.showMessageDialog(null,defn);
+                String ans = JOptionPane.showInputDialog(null,"What term? ");
+                String reply = "";
+                if (ans.equalsIgnoreCase(term)){
+                    JOptionPane.showMessageDialog(null,"That is the correct answer" );
+                }
+                else{
+                    JOptionPane.showMessageDialog(null,"That is not the correct answer");
+                }
+                deck.pop();
             }
+
+            System.exit(0);
 
         }
     }
