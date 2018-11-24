@@ -21,4 +21,8 @@ public class Flashcard {
     public String getDefinition(){
         return definition;
     }
+
+    public String toString(){
+        return "Term: " + getTerm() + "\n Definition: " + getDefinition();
+    }
 }

@@ -1,31 +1,61 @@
-import javax.swing.*;
+import java.awt.event.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-public class Main {
-
-
-    public static void main(String[] args) {
-
-        HelloWorldDisplay displayPanel = new HelloWorldDisplay();
-        JButton okButton = new JButton("OK");
-        ButtonHandler listener = new ButtonHandler();
-        okButton.addActionListener(listener);
-
-        JPanel content = new JPanel();
-        content.setLayout(new BorderLayout());
-        content.add(displayPanel, BorderLayout.CENTER);
-        content.add(okButton, BorderLayout.SOUTH);
-
-        JFrame window = new JFrame("FlashApp");
-        window.setContentPane(content);
-        window.setSize(250,100);
-        window.setLocation(100,100);
-        window.setVisible(true);
-
-
+import javax.swing.*;
+public class Main{
+    public static void main(String[] args){
+        new FlashAppGUI();
     }
 }
+//class solve extends JFrame implements ActionListener {
+//
+//    // frame
+//    static JFrame f;
+//
+//    // main class
+//    public static void main(String[] args)
+//    {
+//        // create a new frame
+//        f = new JFrame("frame");
+//
+//        // create a object
+//        solve s = new solve();
+//
+//        // create a panel
+//        JPanel p = new JPanel();
+//
+//        JButton b = new JButton("click");
+//
+//        // add actionlistener to button
+//        b.addActionListener(s);
+//
+//        // add button to panel
+//        p.add(b);
+//
+//        // add panel to frame
+//        f.add(p);
+//
+//        // set the size of frame
+//        f.setSize(400, 400);
+//
+//        f.show();
+//    }
+//    public void actionPerformed(ActionEvent e)
+//    {
+//        String s = e.getActionCommand();
+//        if (s.equals("click")) {
+//            // create a dialog Box
+//            JDialog d = new JDialog(f, "dialog Box");
+//
+//            // create a label
+//            JLabel l = new JLabel("this is a dialog box");
+//
+//            d.add(l);
+//
+//            // setsize of dialog
+//            d.setSize(100, 100);
+//
+//            // set visibility of dialog
+//            d.setVisible(true);
+//        }
+//    }
+//}
