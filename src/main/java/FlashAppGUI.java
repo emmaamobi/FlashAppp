@@ -1,11 +1,16 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 public class FlashAppGUI extends JFrame implements ActionListener {
-    private CardStack deck = new CardStack();
+    private CardStack deckLIFO;
+    private CardQueue deckFIFO;
     private JFrame f;
     private String ans = "";
+    private String[] options = {"LIFO","FIFO"};
+    private JComboBox c1;
     public FlashAppGUI(){
         // create a new frame
         f = new JFrame("FlashApp");
@@ -15,13 +20,18 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         // create a panel
         JPanel p = new JPanel();
 
-        JButton b = new JButton("click");
+        JLabel j1 = new JLabel("Choose Mode: ");
+        JButton b = new JButton("LIFO");
+        JButton c = new JButton("FIFO");
 
         // add actionlistener to button
         b.addActionListener(this);
+        c.addActionListener(this);
 
         // add button to panel
+        p.add(j1);
         p.add(b);
+        p.add(c);
 
         // add panel to frame
         f.add(p);
@@ -36,31 +46,19 @@ public class FlashAppGUI extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         String s = e.getActionCommand();
-        if (s.equals("click")) {
-//            // create a dialog Box
-//            JDialog d = new JDialog(f, "dialog Box");
-//
-//            // create a label
-//            JLabel l = new JLabel("Stuff");
-//
-//            d.add(l);
-//
-//            // setsize of dialog
-//            d.setSize(100, 100);
-
-            // set visibility of dialog
-//            d.setVisible(true);
+        if (s.equals("LIFO")) {
+            deckLIFO = new CardStack();
             while (!ans.equals("no")) {
-                String word = JOptionPane.showInputDialog(null, "Enter word: ");
-                String definition = JOptionPane.showInputDialog(null, "Enter definition: ");
-                deck.push(new Flashcard(word, definition));
+                String word = JOptionPane.showInputDialog(f, "Enter word: ");
+                String definition = JOptionPane.showInputDialog(f, "Enter definition: ");
+                deckLIFO.push(new Flashcard(word, definition));
 
-                String reply = JOptionPane.showInputDialog(null,"Make another? yes or no: ");
+                String reply = JOptionPane.showInputDialog(f,"Make another? yes or no: ");
                 ans = reply;
             }
-            while (!deck.empty()){
-                String defn  = deck.peek().getDefinition();
-                String term = deck.peek().getTerm();
+            while (!deckLIFO.empty()){
+                String defn  = deckLIFO.peek().getDefinition();
+                String term = deckLIFO.peek().getTerm();
                 JOptionPane.showMessageDialog(null,defn);
                 String ans = JOptionPane.showInputDialog(null,"What term? ");
                 String reply = "";
@@ -70,12 +68,43 @@ public class FlashAppGUI extends JFrame implements ActionListener {
                 else{
                     JOptionPane.showMessageDialog(null,"That is not the correct answer");
                 }
-                deck.pop();
+                deckLIFO.pop();
             }
+
 
             System.exit(0);
 
         }
+        else if (s.equals("FIFO")) {
+            deckFIFO = new CardQueue();
+            while (!ans.equals("no")) {
+                String word = JOptionPane.showInputDialog(f, "Enter word: ");
+                String definition = JOptionPane.showInputDialog(f, "Enter definition: ");
+                deckFIFO.offer(new Flashcard(word, definition));
+
+                String reply = JOptionPane.showInputDialog(f,"Make another? yes or no: ");
+                ans = reply;
+            }
+            while (!deckFIFO.empty()){
+                String defn  = deckFIFO.peek().getDefinition();
+                String term = deckFIFO.peek().getTerm();
+                JOptionPane.showMessageDialog(null,defn);
+                String ans = JOptionPane.showInputDialog(null,"What term? ");
+                String reply = "";
+                if (ans.equalsIgnoreCase(term)){
+                    JOptionPane.showMessageDialog(null,"That is the correct answer" );
+                }
+                else{
+                    JOptionPane.showMessageDialog(null,"That is not the correct answer");
+                }
+                deckFIFO.poll();
+            }
+
+
+            System.exit(0);
+
+        }
+
     }
 
 }
