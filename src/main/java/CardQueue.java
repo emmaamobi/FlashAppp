@@ -2,6 +2,7 @@
 import java.util.*;
 
 public class CardQueue {
+
     private Queue<Flashcard> queueCard;
     public CardQueue(){
         queueCard = new LinkedList<>();
@@ -27,5 +28,6 @@ public class CardQueue {
         //returns if queue is empty
         return queueCard.isEmpty();
     }
+
 
 }
