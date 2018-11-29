@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -14,97 +15,111 @@ public class FlashAppGUI extends JFrame implements ActionListener {
     public FlashAppGUI(){
         // create a new frame
         f = new JFrame("FlashApp");
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mainPanel();
 
-
-
+    }
+    public void mainPanel(){
         // create a panel
-        JPanel p = new JPanel();
+        JPanel mainMenu = new JPanel();
 
+        JLabel intro = new JLabel("Welcome to FlashApp!\n");
         JLabel j1 = new JLabel("Choose Mode: ");
-        JButton b = new JButton("LIFO");
-        JButton c = new JButton("FIFO");
+        JButton LIFO = new JButton("LIFO");
+        JButton FIFO = new JButton("FIFO");
+        JButton exit = new JButton("Exit");
 
         // add actionlistener to button
-        b.addActionListener(this);
-        c.addActionListener(this);
+        LIFO.addActionListener(this);
+        FIFO.addActionListener(this);
+        exit.addActionListener(this);
 
         // add button to panel
-        p.add(j1);
-        p.add(b);
-        p.add(c);
+        mainMenu.add(intro);
+        mainMenu.add(j1);
+        mainMenu.add(LIFO);
+        mainMenu.add(FIFO);
+        mainMenu.add(exit);
 
         // add panel to frame
-        f.add(p);
+        f.add(mainMenu);
 
         // set the size of frame
         f.setSize(400, 400);
 
         f.show();
-
-
     }
 
     public void actionPerformed(ActionEvent e) {
         String s = e.getActionCommand();
         if (s.equals("LIFO")) {
-            deckLIFO = new CardStack();
-            while (!ans.equals("no")) {
-                String word = JOptionPane.showInputDialog(f, "Enter word: ");
-                String definition = JOptionPane.showInputDialog(f, "Enter definition: ");
-                deckLIFO.push(new Flashcard(word, definition));
-
-                String reply = JOptionPane.showInputDialog(f,"Make another? yes or no: ");
-                ans = reply;
-            }
-            while (!deckLIFO.empty()){
-                String defn  = deckLIFO.peek().getDefinition();
-                String term = deckLIFO.peek().getTerm();
-                JOptionPane.showMessageDialog(null,defn);
-                String ans = JOptionPane.showInputDialog(null,"What term? ");
-                String reply = "";
-                if (ans.equalsIgnoreCase(term)){
-                    JOptionPane.showMessageDialog(null,"That is the correct answer" );
-                }
-                else{
-                    JOptionPane.showMessageDialog(null,"That is not the correct answer");
-                }
-                deckLIFO.pop();
-            }
-
-
-            System.exit(0);
-
+            f.hide();
+            lifoMode();
+            f.show();
         }
         else if (s.equals("FIFO")) {
-            deckFIFO = new CardQueue();
-            while (!ans.equals("no")) {
-                String word = JOptionPane.showInputDialog(f, "Enter word: ");
-                String definition = JOptionPane.showInputDialog(f, "Enter definition: ");
-                deckFIFO.offer(new Flashcard(word, definition));
-
-                String reply = JOptionPane.showInputDialog(f,"Make another? yes or no: ");
-                ans = reply;
-            }
-            while (!deckFIFO.empty()){
-                String defn  = deckFIFO.peek().getDefinition();
-                String term = deckFIFO.peek().getTerm();
-                JOptionPane.showMessageDialog(null,defn);
-                String ans = JOptionPane.showInputDialog(null,"What term? ");
-                String reply = "";
-                if (ans.equalsIgnoreCase(term)){
-                    JOptionPane.showMessageDialog(null,"That is the correct answer" );
-                }
-                else{
-                    JOptionPane.showMessageDialog(null,"That is not the correct answer");
-                }
-                deckFIFO.poll();
-            }
-
-
-            System.exit(0);
-
+            f.hide();
+            fifoMode();
+            f.show();
         }
-
+        else if (s.equals("Exit")){
+            System.exit(0);
+        }
     }
 
+    public void fifoMode(){
+        deckFIFO = new CardQueue();
+        while (!ans.equalsIgnoreCase("no")) {
+            String word = JOptionPane.showInputDialog(f, "Enter term: ");
+            String definition = JOptionPane.showInputDialog(f, "Enter definition for " + word+ ": ");
+            deckFIFO.offer(new Flashcard(word, definition));
+            ans = JOptionPane.showInputDialog(f,"Make another?  Type yes or no: ");
+            ////work on this below, currently not functioning
+            if (!ans.equalsIgnoreCase("yes") && !ans.equalsIgnoreCase("no")){
+                ans = JOptionPane.showInputDialog(f,"That was not a valid input. Try again.\n" +
+                        "Make another? Type yes or no:");
+            }
+        }
+        while (!deckFIFO.empty()){
+            String defn  = deckFIFO.peek().getDefinition();
+            String term = deckFIFO.peek().getTerm();
+            String reply = JOptionPane.showInputDialog(null,"What term goes with " + defn+ "?");
+            if (reply.equalsIgnoreCase(term)){
+                JOptionPane.showMessageDialog(null,"That is the correct answer!");
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"That is not the correct answer.");
+            }
+            deckFIFO.poll();
+        }
+    }
+
+    public void lifoMode(){
+        deckLIFO = new CardStack();
+        while (!ans.equals("no")) {
+            String word = JOptionPane.showInputDialog(f, "Enter term: ");
+            String definition = JOptionPane.showInputDialog(f, "Enter definition for " + word +": ");
+            deckLIFO.push(new Flashcard(word, definition));
+
+            String reply = JOptionPane.showInputDialog(f,"Make another? Type yes or no: ");
+            ans = reply;
+        }
+        while (!deckLIFO.empty()){
+            String defn  = deckLIFO.peek().getDefinition();
+            String term = deckLIFO.peek().getTerm();
+            String ans = JOptionPane.showInputDialog(null,"What term goes with " + defn+ "?");
+            String reply = "";
+            if (ans.equalsIgnoreCase(term)){
+                JOptionPane.showMessageDialog(null,"That is the correct answer!" );
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"That is not the correct answer.");
+            }
+            deckLIFO.pop();
+        }
+    }
 }
