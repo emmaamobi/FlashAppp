@@ -1,4 +1,7 @@
+import jdk.nashorn.internal.scripts.JO;
+
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,6 +20,8 @@ public class FlashAppGUI extends JFrame implements ActionListener {
     private String ans = "";
     private String[] options = {"LIFO","FIFO"};
     private JComboBox c1;
+    boolean term = true;
+    boolean browseMode = false;
     public FlashAppGUI(){
         // create a new frame
         f = new JFrame("FlashApp");
@@ -30,30 +35,37 @@ public class FlashAppGUI extends JFrame implements ActionListener {
 
     }
     public void mainPanel(){
-        // create a panel
+        // create panels and panes
         JSplitPane mainMenu = new JSplitPane();
         mainMenu.setLayout(new BoxLayout(mainMenu, BoxLayout.PAGE_AXIS));
         JPanel top = new JPanel();
-        JPanel bottom = new JPanel();
-        JPanel flashcard = new JPanel();
-        JPanel modes = new JPanel();
-        JPanel buttons = new JPanel();
+        JPanel modes = new JPanel(); //will go in top
 
+        JSplitPane bottom = new JSplitPane();
+        bottom.setLayout(new BoxLayout(bottom, BoxLayout.PAGE_AXIS));
+        JPanel flashcard = new JPanel(); //will go in bottom
+        JPanel buttons = new JPanel(); //will go in bottom
+
+        //sets up the split panes
         mainMenu.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        mainMenu.setDividerLocation(100);
         mainMenu.setTopComponent(top);
         mainMenu.setBottomComponent(bottom);
+        mainMenu.setDividerLocation(90);
+        bottom.setOrientation(JSplitPane.VERTICAL_SPLIT);
+        bottom.setTopComponent(flashcard);
+        bottom.setDividerLocation(200);
+        bottom.setBottomComponent(buttons);
+        mainMenu.setEnabled(false);
+        bottom.setEnabled(false);
 
+        //spice up that layout, set window size and panel layout
         setPreferredSize(new Dimension(400,400));
         getContentPane().setLayout(new GridLayout());
         getContentPane().add(mainMenu);
-
         top.setLayout(new BoxLayout(top, BoxLayout.Y_AXIS));
-        bottom.setLayout(new BoxLayout(bottom, BoxLayout.PAGE_AXIS));
-        bottom.add(flashcard);
-        bottom.add(buttons);
         top.add(modes);
 
+        //create all components
         JLabel intro = new JLabel("Welcome to FlashApp!");
         JLabel j1 = new JLabel("Choose Mode: ");
         JButton LIFO = new JButton("LIFO");
@@ -62,8 +74,11 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         JButton browse = new JButton("Browse cards");
         JButton next = new JButton("Next");
         JButton prev = new JButton("Previous");
+        JButton flip = new JButton("Flip");
         card = new JLabel();
-        JLabel instructions = new JLabel("");
+        card.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+        JButton edit = new JButton("Edit");
+       //JLabel instructions = new JLabel("");
         //JTextField field = new JTextField();
         JButton exit = new JButton("Exit");
 
@@ -74,6 +89,8 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         browse.addActionListener(this);
         next.addActionListener(this);
         prev.addActionListener(this);
+        flip.addActionListener(this);
+        edit.addActionListener(this);
         //field.addActionListener(this);
         exit.addActionListener(this);
 
@@ -85,11 +102,13 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         modes.add(create);
         modes.add(browse);
         flashcard.add(card);
-        flashcard.add(instructions);
-        flashcard.add(next);
-        flashcard.add(prev);
+        //flashcard.add(instructions);
+        buttons.add(edit);
+        buttons.add(flip);
+        buttons.add(next);
+        buttons.add(prev);
         //flashcard.add(field);
-        flashcard.add(exit);
+        buttons.add(exit);
         // add panel to frame
         f.add(mainMenu);
 
@@ -118,24 +137,62 @@ public class FlashAppGUI extends JFrame implements ActionListener {
             f.show();
         }
         else if (s.equals("Browse cards")){
+            browseMode = true;
             browseModeNext(0);
         }
         else if (s.equals("Next")){
-            if (pos == cards.size()){
-                JOptionPane.showMessageDialog(null, "There are no more cards.");
+            if (browseMode) {
+                if (pos == cards.size()) {
+                    JOptionPane.showMessageDialog(null, "There are no more cards.");
+                } else {
+                    pos++;
+                    browseModeNext(pos);
+                }
             }
-            else {
-                pos++;
-                browseModeNext(pos);
+            else{
+                card.setText("You must enable Browse Mode to use this feature.");
             }
         }
         else if (s.equals("Previous")){
-            if (pos == 0){
-                JOptionPane.showMessageDialog(null, "There are no more cards.");
+            if (browseMode) {
+                if (pos == 0) {
+                    JOptionPane.showMessageDialog(null, "There are no more cards.");
+                } else {
+                    pos--;
+                    browseModePrev(pos);
+                }
             }
             else{
-                pos--;
-                browseModePrev(pos);
+                card.setText("You must enable Browse Mode to use this feature.");
+            }
+        }
+        else if (s.equals("Flip")){
+            if (browseMode) {
+                if (term) {
+                    card.setText(cards.get(pos).getDefinition());
+                    term = false;
+                } else {
+                    card.setText(cards.get(pos).getTerm());
+                    term = true;
+                }
+            }
+            else{
+                card.setText("You must enable Browse Mode to use this feature.");
+            }
+        }
+        else if (s.equals("Edit")){
+            if (browseMode) {
+                if (term) {
+                    cards.get(pos).setTerm(JOptionPane.showInputDialog("Enter a new term for this card:"));
+                    card.setText(cards.get(pos).getTerm());
+
+                } else {
+                    cards.get(pos).setDef(JOptionPane.showInputDialog("Enter a new definition for this card:"));
+                    card.setText(cards.get(pos).getDefinition());
+                }
+            }
+            else{
+                card.setText("You must enable Browse Mode to use this feature.");
             }
         }
         else if (s.equals("Exit")){
@@ -200,7 +257,6 @@ public class FlashAppGUI extends JFrame implements ActionListener {
     }
 
     public void browseModeNext(int position){
-        System.out.println(position);
         if (cards.isEmpty()){
             JOptionPane.showMessageDialog(null, "You must create a flashcard set first.");
         }
@@ -213,7 +269,6 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         }
     }
     public void browseModePrev(int position){
-        System.out.println(position);
         if (cards.isEmpty()){
             JOptionPane.showMessageDialog(null, "You must create a flashcard set first.");
         }
