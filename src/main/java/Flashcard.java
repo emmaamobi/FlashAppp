@@ -25,4 +25,12 @@ public class Flashcard {
     public String toString(){
         return "Term: " + getTerm() + "\n Definition: " + getDefinition();
     }
+
+    public void setTerm(String newTerm){
+        term = newTerm;
+    }
+
+    public void setDef(String newDef){
+        definition = newDef;
+    }
 }
