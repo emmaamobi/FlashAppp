@@ -27,7 +27,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         cards = new ArrayList<Flashcard>();
 
     }
-    public void mainPanel(){
+    private void mainPanel(){
         // create panels and panes
         JSplitPane mainMenu = new JSplitPane();
         mainMenu.setLayout(new BoxLayout(mainMenu, BoxLayout.PAGE_AXIS));
@@ -189,13 +189,12 @@ public class FlashAppGUI extends JFrame implements ActionListener {
             System.exit(0);
         }
     }
-    public void createDeck(){
+    private void createDeck(){
         cards.clear();
         while (!ans.equalsIgnoreCase("no")){
             String word = JOptionPane.showInputDialog(f, "Enter term: ");
             String definition = JOptionPane.showInputDialog(f, "Enter definition for " + word + ": ");
             cards.add(new Flashcard(word, definition));
-            System.out.println(cards.toString());
             ans = JOptionPane.showInputDialog(f, "Make another?  Type yes or no: ");
             ////work on this below, currently not functioning
             if (!ans.equalsIgnoreCase("yes") && !ans.equalsIgnoreCase("no")) {
@@ -206,7 +205,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
 
     }
 
-    public void fifoMode(){
+    private void fifoMode(){
         deckFIFO = new CardQueue();
         if (cards.isEmpty()) {
             JOptionPane.showMessageDialog(null, "You must create a flashcard set first.");
@@ -222,7 +221,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         }
     }
 
-    public void lifoMode() {
+    private void lifoMode() {
         deckLIFO = new CardStack();
         if (cards.isEmpty()) {
             JOptionPane.showMessageDialog(null, "You must create a flashcard set first.");
@@ -237,7 +236,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
             deckLIFO.pop();
         }
     }
-    public void checkAnswer(String input, String term){
+    private void checkAnswer(String input, String term){
         if (input.equalsIgnoreCase(term)){
             JOptionPane.showMessageDialog(null,"That is the correct answer!" );
         }
@@ -246,7 +245,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         }
     }
 
-    public void browseModeNext(int position){
+    private void browseModeNext(int position){
         if (cards.isEmpty()){
             JOptionPane.showMessageDialog(null, "You must create a flashcard set first.");
         }
@@ -258,7 +257,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
             pos = cards.size()-1;
         }
     }
-    public void browseModePrev(int position){
+    private void browseModePrev(int position){
         if (cards.isEmpty()){
             JOptionPane.showMessageDialog(null, "You must create a flashcard set first.");
         }
