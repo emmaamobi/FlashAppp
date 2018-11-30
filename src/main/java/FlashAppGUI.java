@@ -148,6 +148,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
                     pos++;
                     browseModeNext(pos);
                 }
+                term = true;
             }
             else{
                 card.setText("You must enable Browse Mode to use this feature.");
@@ -161,6 +162,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
                     pos--;
                     browseModePrev(pos);
                 }
+                term = true;
             }
             else{
                 card.setText("You must enable Browse Mode to use this feature.");
