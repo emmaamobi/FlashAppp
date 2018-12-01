@@ -1,14 +1,8 @@
-
-
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class FlashAppGUI extends JFrame implements ActionListener {
     private CardStack deckLIFO;
@@ -18,8 +12,6 @@ public class FlashAppGUI extends JFrame implements ActionListener {
     private JLabel card;
     private int pos;
     private String ans = "";
-    private String[] options = {"LIFO","FIFO"};
-    private JComboBox c1;
     boolean term = true;
     boolean browseMode = false;
     public FlashAppGUI(){
@@ -34,7 +26,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         cards = new ArrayList<Flashcard>();
 
     }
-    public void mainPanel(){
+    private void mainPanel(){
         // create panels and panes
         JSplitPane mainMenu = new JSplitPane();
         mainMenu.setLayout(new BoxLayout(mainMenu, BoxLayout.PAGE_AXIS));
@@ -78,8 +70,6 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         card = new JLabel();
         card.setFont(new Font("Times New Roman", Font.PLAIN, 18));
         JButton edit = new JButton("Edit");
-       //JLabel instructions = new JLabel("");
-        //JTextField field = new JTextField();
         JButton exit = new JButton("Exit");
 
         // add actionlistener to button
@@ -91,7 +81,6 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         prev.addActionListener(this);
         flip.addActionListener(this);
         edit.addActionListener(this);
-        //field.addActionListener(this);
         exit.addActionListener(this);
 
         // add button to panel
@@ -102,12 +91,10 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         modes.add(create);
         modes.add(browse);
         flashcard.add(card);
-        //flashcard.add(instructions);
         buttons.add(edit);
         buttons.add(flip);
         buttons.add(next);
         buttons.add(prev);
-        //flashcard.add(field);
         buttons.add(exit);
         // add panel to frame
         f.add(mainMenu);
@@ -148,6 +135,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
                     pos++;
                     browseModeNext(pos);
                 }
+                term = true;
             }
             else{
                 card.setText("You must enable Browse Mode to use this feature.");
@@ -161,6 +149,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
                     pos--;
                     browseModePrev(pos);
                 }
+                term = true;
             }
             else{
                 card.setText("You must enable Browse Mode to use this feature.");
@@ -199,13 +188,12 @@ public class FlashAppGUI extends JFrame implements ActionListener {
             System.exit(0);
         }
     }
-    public void createDeck(){
+    private void createDeck(){
         cards.clear();
         while (!ans.equalsIgnoreCase("no")){
             String word = JOptionPane.showInputDialog(f, "Enter term: ");
             String definition = JOptionPane.showInputDialog(f, "Enter definition for " + word + ": ");
             cards.add(new Flashcard(word, definition));
-            System.out.println(cards.toString());
             ans = JOptionPane.showInputDialog(f, "Make another?  Type yes or no: ");
             ////work on this below, currently not functioning
             if (!ans.equalsIgnoreCase("yes") && !ans.equalsIgnoreCase("no")) {
@@ -216,7 +204,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
 
     }
 
-    public void fifoMode(){
+    private void fifoMode(){
         deckFIFO = new CardQueue();
         if (cards.isEmpty()) {
             JOptionPane.showMessageDialog(null, "You must create a flashcard set first.");
@@ -232,7 +220,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         }
     }
 
-    public void lifoMode() {
+    private void lifoMode() {
         deckLIFO = new CardStack();
         if (cards.isEmpty()) {
             JOptionPane.showMessageDialog(null, "You must create a flashcard set first.");
@@ -247,7 +235,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
             deckLIFO.pop();
         }
     }
-    public void checkAnswer(String input, String term){
+    private void checkAnswer(String input, String term){
         if (input.equalsIgnoreCase(term)){
             JOptionPane.showMessageDialog(null,"That is the correct answer!" );
         }
@@ -256,7 +244,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         }
     }
 
-    public void browseModeNext(int position){
+    private void browseModeNext(int position){
         if (cards.isEmpty()){
             JOptionPane.showMessageDialog(null, "You must create a flashcard set first.");
         }
@@ -268,7 +256,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
             pos = cards.size()-1;
         }
     }
-    public void browseModePrev(int position){
+    private void browseModePrev(int position){
         if (cards.isEmpty()){
             JOptionPane.showMessageDialog(null, "You must create a flashcard set first.");
         }
