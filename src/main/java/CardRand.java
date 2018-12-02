@@ -51,9 +51,10 @@ public class CardRand {
 
         //Find random index
         Random rand = new Random();
+        
         int index = rand.nextInt(arr.size());
 
-        //Return element at innedx
+        //Return element at index
         return arr.get(index);
     }
 
