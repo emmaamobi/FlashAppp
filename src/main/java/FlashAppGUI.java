@@ -62,6 +62,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         JLabel j1 = new JLabel("Choose Mode: ");
         JButton LIFO = new JButton("LIFO");
         JButton FIFO = new JButton("FIFO");
+        JButton RAND = new JButton("RANDOM");
         JButton create = new JButton("Create flashcard set");
         JButton browse = new JButton("Browse cards");
         JButton next = new JButton("Next");
@@ -75,6 +76,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         // add actionlistener to button
         LIFO.addActionListener(this);
         FIFO.addActionListener(this);
+        RAND.addActionListener(this);
         create.addActionListener(this);
         browse.addActionListener(this);
         next.addActionListener(this);
@@ -88,6 +90,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         modes.add(j1);
         modes.add(LIFO);
         modes.add(FIFO);
+        modes.add(RAND);
         modes.add(create);
         modes.add(browse);
         flashcard.add(card);
@@ -234,6 +237,9 @@ public class FlashAppGUI extends JFrame implements ActionListener {
             checkAnswer(input, term);
             deckLIFO.pop();
         }
+    }
+    private void RandMode(){
+
     }
     private void checkAnswer(String input, String term){
         if (input.equalsIgnoreCase(term)){
