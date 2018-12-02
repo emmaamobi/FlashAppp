@@ -47,7 +47,7 @@ public class CardRand {
         myMap.put(last,index);
     }
 
-    Flashcard getRandom(){
+    public Flashcard getRandom(){
 
         //Find random index
         Random rand = new Random();
