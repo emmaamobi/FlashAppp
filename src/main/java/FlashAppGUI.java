@@ -296,4 +296,5 @@ public class FlashAppGUI extends JFrame implements ActionListener {
             card.setText(cards.get(position).getTerm());
         }
     }
+
 }
