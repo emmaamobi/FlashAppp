@@ -1,4 +1,3 @@
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,6 +7,7 @@ import java.util.ArrayList;
 public class FlashAppGUI extends JFrame implements ActionListener {
     private CardStack deckLIFO;
     private CardQueue deckFIFO;
+    private CardRand deckRAND;
     private ArrayList<Flashcard> cards;
     private JFrame f;
     private JLabel card;
@@ -63,6 +63,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         JLabel j1 = new JLabel("Choose Mode: ");
         JButton LIFO = new JButton("LIFO");
         JButton FIFO = new JButton("FIFO");
+        JButton RAND = new JButton("RANDOM");
         JButton create = new JButton("Create flashcard set");
         JButton browse = new JButton("Browse cards");
         JButton next = new JButton("Next");
@@ -76,6 +77,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         // add actionlistener to button
         LIFO.addActionListener(this);
         FIFO.addActionListener(this);
+        RAND.addActionListener(this);
         create.addActionListener(this);
         browse.addActionListener(this);
         next.addActionListener(this);
@@ -89,6 +91,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         modes.add(j1);
         modes.add(LIFO);
         modes.add(FIFO);
+        modes.add(RAND);
         modes.add(create);
         modes.add(browse);
         flashcard.add(card);
@@ -117,6 +120,12 @@ public class FlashAppGUI extends JFrame implements ActionListener {
             f.hide();
             fifoMode();
             f.show();
+        }
+        else if (s.equals("RANDOM")){
+            f.hide();
+            randMode();
+            f.show();
+
         }
         else if (s.equals("Create flashcard set")){
             f.hide();
@@ -236,6 +245,28 @@ public class FlashAppGUI extends JFrame implements ActionListener {
             deckLIFO.pop();
         }
     }
+    private void randMode(){
+        deckRAND = new CardRand();
+         if (cards.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "You must create a flashcard set first.");
+        }
+        for (int i = 0; i < cards.size(); i++){
+            deckRAND.add(cards.get(i));
+        }
+
+        while (!deckRAND.isEmpty()){
+            Flashcard card = deckRAND.getRandom();
+            String term = card.getTerm();
+
+            String input = JOptionPane.showInputDialog(null,"What term goes with " + card.getDefinition()+ "?");
+            checkAnswer(input, term);
+            deckRAND.remove(card);
+        }
+
+
+
+    }
+
     private void checkAnswer(String input, String term){
         if (input.equalsIgnoreCase(term)){
             JOptionPane.showMessageDialog(null,"That is the correct answer!" );
@@ -265,4 +296,5 @@ public class FlashAppGUI extends JFrame implements ActionListener {
             card.setText(cards.get(position).getTerm());
         }
     }
+
 }
