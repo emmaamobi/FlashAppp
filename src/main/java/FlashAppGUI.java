@@ -63,7 +63,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         JLabel j1 = new JLabel("Choose Mode: ");
         JButton LIFO = new JButton("LIFO");
         JButton FIFO = new JButton("FIFO");
-        JButton RAND = new JButton("RANDOM");
+        JButton RAND = new JButton("Random");
         JButton create = new JButton("Create flashcard set");
         JButton browse = new JButton("Browse cards");
         JButton next = new JButton("Next");
@@ -121,7 +121,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
             fifoMode();
             f.show();
         }
-        else if (s.equals("RANDOM")){
+        else if (s.equals("Random")){
             f.hide();
             randMode();
             f.show();
