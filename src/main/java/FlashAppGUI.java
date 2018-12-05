@@ -24,7 +24,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
             e.printStackTrace();
         }
         mainPanel();
-        cards = new ArrayList<Flashcard>();
+        cards = new ArrayList<>();
 
     }
     private void mainPanel(){
@@ -142,6 +142,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
                 card.setText("Browse Mode is now off.");
             }
             else{
+                pos = 0;
                 browseMode = true;
                 browseModeNext(0);
             }
