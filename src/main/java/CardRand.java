@@ -32,6 +32,11 @@ public class CardRand {
         if (index == null){
             return;
         }
+        if (myMap.size() == 1){
+            myMap.remove(card);
+            arr.remove(0);
+            return;
+        }
         //Remove from map
         myMap.remove(card);
 
@@ -61,5 +66,12 @@ public class CardRand {
         return arr.isEmpty();
     }
 
+    public String toArrString(){
+        //prints the arr out to a string
+        return arr.toString();
+    }
 
+    public String toMapString(){
+        return myMap.toString();
+    }
 }
