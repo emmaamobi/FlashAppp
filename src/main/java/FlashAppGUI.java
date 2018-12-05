@@ -134,8 +134,17 @@ public class FlashAppGUI extends JFrame implements ActionListener {
             f.show();
         }
         else if (s.equals("Browse cards")){
-            browseMode = true;
-            browseModeNext(0);
+            if (cards.isEmpty()){
+                JOptionPane.showMessageDialog(null, "You must create a flashcard set first.");
+            }
+            else if (browseMode){
+                browseMode = false;
+                card.setText("Browse Mode is now off.");
+            }
+            else{
+                browseMode = true;
+                browseModeNext(0);
+            }
         }
         else if (s.equals("Next")){
             if (browseMode) {
