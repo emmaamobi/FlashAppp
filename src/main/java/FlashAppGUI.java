@@ -24,7 +24,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
             e.printStackTrace();
         }
         mainPanel();
-        cards = new ArrayList<Flashcard>();
+        cards = new ArrayList<>();
 
     }
     private void mainPanel(){
@@ -63,7 +63,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         JLabel j1 = new JLabel("Choose Mode: ");
         JButton LIFO = new JButton("LIFO");
         JButton FIFO = new JButton("FIFO");
-        JButton RAND = new JButton("RANDOM");
+        JButton RAND = new JButton("Random");
         JButton create = new JButton("Create flashcard set");
         JButton browse = new JButton("Browse cards");
         JButton next = new JButton("Next");
@@ -121,7 +121,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
             fifoMode();
             f.show();
         }
-        else if (s.equals("RANDOM")){
+        else if (s.equals("Random")){
             f.hide();
             randMode();
             f.show();
@@ -134,8 +134,18 @@ public class FlashAppGUI extends JFrame implements ActionListener {
             f.show();
         }
         else if (s.equals("Browse cards")){
-            browseMode = true;
-            browseModeNext(0);
+            if (cards.isEmpty()){
+                JOptionPane.showMessageDialog(null, "You must create a flashcard set first.");
+            }
+            else if (browseMode){
+                browseMode = false;
+                card.setText("Browse Mode is now off.");
+            }
+            else{
+                pos = 0;
+                browseMode = true;
+                browseModeNext(0);
+            }
         }
         else if (s.equals("Next")){
             if (browseMode) {
