@@ -24,18 +24,22 @@ public class TestRandom {
         @Test
         public void testInitial(){
             //tests isEmpty method and to make sure nothing is preloaded
-            assertTrue(fixture.isEmpty());
+            assertTrue(fixture.isArrEmpty());
+            assertTrue(fixture.isMapEmpty());
         }
 
         @Test
         public void testEmpty(){
             //tests isEmpty method in CardRand
-            assertTrue(fixture.isEmpty());
+            assertTrue(fixture.isArrEmpty());
+            assertTrue(fixture.isMapEmpty());
             Flashcard test = new Flashcard("Paris", "France");
             fixture.add(test);
-            assertFalse(fixture.isEmpty());
+            assertFalse(fixture.isArrEmpty());
+            assertFalse(fixture.isMapEmpty());
             fixture.remove(test);
-            assertTrue(fixture.isEmpty());
+            assertTrue(fixture.isArrEmpty());
+            assertTrue(fixture.isMapEmpty());
         }
 
         @Test
@@ -86,7 +90,8 @@ public class TestRandom {
             map.remove(test1);
             assertEquals(example.toString(), fixture.toArrString());
             assertEquals(map.toString(), fixture.toMapString());
-            assertTrue(fixture.isEmpty());
+            assertTrue(fixture.isArrEmpty());
+            assertTrue(fixture.isMapEmpty());
 
         }
 }
