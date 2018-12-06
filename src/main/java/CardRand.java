@@ -62,9 +62,10 @@ public class CardRand {
         return arr.get(index);
     }
 
-    public boolean isEmpty(){
+    public boolean isArrEmpty(){
         return arr.isEmpty();
     }
+    public boolean isMapEmpty() { return myMap.isEmpty();}
 
     public String toArrString(){
         //prints the arr out to a string

@@ -264,7 +264,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
             deckRAND.add(cards.get(i));
         }
 
-        while (!deckRAND.isEmpty()){
+        while (!deckRAND.isArrEmpty()){
             Flashcard card = deckRAND.getRandom();
             String term = card.getTerm();
 
