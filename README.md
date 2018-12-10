@@ -11,7 +11,6 @@ create a set of flashcards and then use a variety of game modes including:
 * Random
 * LIFO
 * FIFO
-
 ##Flashcard Creation
 Users can create a flashcard set by entering the term and definition of each card. There
 is no limit on the amount of cards a user can create.
