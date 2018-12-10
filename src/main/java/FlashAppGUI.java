@@ -15,11 +15,13 @@ public class FlashAppGUI extends JFrame implements ActionListener {
     private CardRand deckRAND;
     private ArrayList<Flashcard> cards;
     private JFrame f;
+    private JPanel flashcard;
     private JLabel card;
     private int pos;
     private String ans = "";
     boolean term = true;
     boolean browseMode = false;
+    private int score = 0;
 
     /**Constructor creates the GUI and makes it match
      * the current system's look.**/
@@ -46,7 +48,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
 
         JSplitPane bottom = new JSplitPane();
         bottom.setLayout(new BoxLayout(bottom, BoxLayout.PAGE_AXIS));
-        JPanel flashcard = new JPanel(); //will go in bottom
+        flashcard = new JPanel(); //will go in bottom
         JPanel buttons = new JPanel(); //will go in bottom
 
         //sets up the split panes
@@ -193,9 +195,11 @@ public class FlashAppGUI extends JFrame implements ActionListener {
                 if (term) {
                     card.setText(cards.get(pos).getDefinition());
                     term = false;
+                    setBackgroundColor();
                 } else {
                     card.setText(cards.get(pos).getTerm());
                     term = true;
+                    setBackgroundColor();
                 }
             }
             else{
@@ -222,6 +226,16 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         }
     }
 
+    /**This method changes the background color of the flashcard based on
+     * the current background color.**/
+    private void setBackgroundColor(){
+        if (flashcard.getBackground() == Color.GRAY){
+            flashcard.setBackground(Color.PINK);
+        }
+        else{
+            flashcard.setBackground(Color.GRAY);
+        }
+    }
     /**This method creates the deck based on user input.
      * The user enters the term and definition and then
      * enters yes or no if they want to continue entering
@@ -247,6 +261,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
      * the order they were entered in. **/
     private void fifoMode(){
         deckFIFO = new CardQueue();
+        score = 0;
         if (cards.isEmpty()) {
             JOptionPane.showMessageDialog(null, "You must create a flashcard set first.");
         }
@@ -259,6 +274,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
             checkAnswer(input, term);
             deckFIFO.poll();
         }
+        JOptionPane.showMessageDialog(null,"Your total score was " + score + ".");
     }
 
     /**This method handles the lifo mode which
@@ -266,6 +282,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
      * the reverse order they were entered in. **/
     private void lifoMode() {
         deckLIFO = new CardStack();
+        score = 0;
         if (cards.isEmpty()) {
             JOptionPane.showMessageDialog(null, "You must create a flashcard set first.");
         }
@@ -278,6 +295,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
             checkAnswer(input, term);
             deckLIFO.pop();
         }
+        JOptionPane.showMessageDialog(null,"Your total score was " + score + ".");
     }
 
     /**This method handles the random mode which
@@ -285,6 +303,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
      * to quiz the user.**/
     private void randMode(){
         deckRAND = new CardRand();
+        score = 0;
          if (cards.isEmpty()) {
             JOptionPane.showMessageDialog(null, "You must create a flashcard set first.");
         }
@@ -299,6 +318,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
             checkAnswer(input, term);
             deckRAND.remove(card);
         }
+        JOptionPane.showMessageDialog(null,"Your total score was " + score + ".");
     }
 
     /**This method checks to see if the user input is the correct
@@ -306,6 +326,8 @@ public class FlashAppGUI extends JFrame implements ActionListener {
     private void checkAnswer(String input, String term){
         if (input.equalsIgnoreCase(term)){
             JOptionPane.showMessageDialog(null,"That is the correct answer!" );
+            score++;
+            JOptionPane.showMessageDialog(null,"Your score: " + score);
         }
         else{
             JOptionPane.showMessageDialog(null,"That is not the correct answer.");
@@ -320,6 +342,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         }
         else if (position < cards.size()){
             card.setText(cards.get(position).getTerm());
+            setBackgroundColor();
         }
         else{
             JOptionPane.showMessageDialog(null, "There are no more cards.");
@@ -335,6 +358,7 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         }
         else if (position >= 0){
             card.setText(cards.get(position).getTerm());
+            setBackgroundColor();
         }
     }
 

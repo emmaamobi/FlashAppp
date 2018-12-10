@@ -24,10 +24,15 @@ definitions of a card even after creation.
 
 ## Random Mode
 The user can use random mode to test themselves using a created flashcard set. This mode will select
-a random flashcard from the set, in no particular order.
+a random flashcard from the set, in no particular order. For every term or definition a user gets right, 
+their score increases. At the end of the mode, the user finds out their total score.
 
 ## LIFO Mode
-LIFO mode tests the user on the created flashcard set in the reverse order of entry.
+LIFO mode tests the user on the created flashcard set in the reverse order of entry. For every
+term or definition a user gets right, their score increases. At the end of the mode, the user
+finds out their total score.
 
 ## FIFO Mode
-FIFO mode tests the user on the created flashcard set in order of entry.
+FIFO mode tests the user on the created flashcard set in order of entry. For every
+term or definition a user gets right, their score increases. At the end of the mode, 
+the user finds out their total score.
