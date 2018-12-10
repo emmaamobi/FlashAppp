@@ -5,6 +5,11 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class FlashAppGUI extends JFrame implements ActionListener {
+
+    /** This class creates the GUI and handles the user
+     * interaction with the GUI. This utilizes JavaSwing
+     * to create a GUI.**/
+
     private CardStack deckLIFO;
     private CardQueue deckFIFO;
     private CardRand deckRAND;
@@ -15,6 +20,9 @@ public class FlashAppGUI extends JFrame implements ActionListener {
     private String ans = "";
     boolean term = true;
     boolean browseMode = false;
+
+    /**Constructor creates the GUI and makes it match
+     * the current system's look.**/
     public FlashAppGUI(){
         // create a new frame
         f = new JFrame("FlashApp");
@@ -25,8 +33,10 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         }
         mainPanel();
         cards = new ArrayList<>();
-
     }
+
+    /**Creates the main panel of the GUI and creates the buttons,
+     * labels, etc. **/
     private void mainPanel(){
         // create panels and panes
         JSplitPane mainMenu = new JSplitPane();
@@ -109,6 +119,9 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         f.show();
     }
 
+    /**This method handles all of the button actions
+     * and calls the appropriate methods based on
+     * the button pressed.**/
     public void actionPerformed(ActionEvent e) {
         String s = e.getActionCommand();
         if (s.equals("LIFO")) {
@@ -208,6 +221,11 @@ public class FlashAppGUI extends JFrame implements ActionListener {
             System.exit(0);
         }
     }
+
+    /**This method creates the deck based on user input.
+     * The user enters the term and definition and then
+     * enters yes or no if they want to continue entering
+     * cards. **/
     private void createDeck(){
         cards.clear();
         while (!ans.equalsIgnoreCase("no")){
@@ -224,6 +242,9 @@ public class FlashAppGUI extends JFrame implements ActionListener {
 
     }
 
+    /**This method handles the fifo mode which
+     * quizzes the user about the flashcards in
+     * the order they were entered in. **/
     private void fifoMode(){
         deckFIFO = new CardQueue();
         if (cards.isEmpty()) {
@@ -240,6 +261,9 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         }
     }
 
+    /**This method handles the lifo mode which
+     * quizzes the user about the flashcards in
+     * the reverse order they were entered in. **/
     private void lifoMode() {
         deckLIFO = new CardStack();
         if (cards.isEmpty()) {
@@ -255,6 +279,10 @@ public class FlashAppGUI extends JFrame implements ActionListener {
             deckLIFO.pop();
         }
     }
+
+    /**This method handles the random mode which
+     * randomly chooses flashcards from the set
+     * to quiz the user.**/
     private void randMode(){
         deckRAND = new CardRand();
          if (cards.isEmpty()) {
@@ -263,7 +291,6 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         for (int i = 0; i < cards.size(); i++){
             deckRAND.add(cards.get(i));
         }
-
         while (!deckRAND.isArrEmpty()){
             Flashcard card = deckRAND.getRandom();
             String term = card.getTerm();
@@ -272,11 +299,10 @@ public class FlashAppGUI extends JFrame implements ActionListener {
             checkAnswer(input, term);
             deckRAND.remove(card);
         }
-
-
-
     }
 
+    /**This method checks to see if the user input is the correct
+     * answer**/
     private void checkAnswer(String input, String term){
         if (input.equalsIgnoreCase(term)){
             JOptionPane.showMessageDialog(null,"That is the correct answer!" );
@@ -286,6 +312,8 @@ public class FlashAppGUI extends JFrame implements ActionListener {
         }
     }
 
+    /**This method handles the next button action
+     * and switches the label to show the next flashcard.**/
     private void browseModeNext(int position){
         if (cards.isEmpty()){
             JOptionPane.showMessageDialog(null, "You must create a flashcard set first.");
@@ -298,6 +326,9 @@ public class FlashAppGUI extends JFrame implements ActionListener {
             pos = cards.size()-1;
         }
     }
+
+    /**This method handles the previous button action
+     * and switches the label to the previous flashcard.**/
     private void browseModePrev(int position){
         if (cards.isEmpty()){
             JOptionPane.showMessageDialog(null, "You must create a flashcard set first.");
